@@ -82,8 +82,16 @@ namespace ServicioTecnico
 
         private void CargarDatosPorBuscador(string cliNombre = "", string cliApellido = "", string marca = "", string modelo = "", string serie = "", string tecnico = "", string estado = "")
         {
+            IEnumerable<dynamic> equipos = null;
             Session["prob"] = 2;
-            var equipos = LogicaEquipos.ListadoEquiposReparacionesBuscarPor(cliNombre, cliApellido, marca, modelo, serie, tecnico, estado);
+            if (ddlBuscarPor.SelectedValue == "Todo")
+            {
+                equipos = LogicaEquipos.ListadoEquiposReparacionesBuscarPorTodo(cliNombre, cliApellido, marca, modelo, serie, tecnico, estado);
+            }
+            else
+            {
+                equipos = LogicaEquipos.ListadoEquiposReparacionesBuscarPor(cliNombre, cliApellido, marca, modelo, serie, tecnico, estado);
+            }
 
             if (equipos != null)
             {
@@ -197,6 +205,7 @@ namespace ServicioTecnico
 
         private void MostrarToast(string titulo, string mensaje, string tipo, int duracion = 3000) => ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "mostrarToast", "mostrarToast('" + titulo + "', '" + mensaje + "', '" + tipo + "', " + duracion + ");", true);
 
+
         protected void btnConfirmarRegistro_Click(object sender, EventArgs e)
         {
             if (txtReparacion.Text != "" && txtPrecio.Text != "" && hfServicioTecnico.Value != "" && hfIdEquipo.Value != "")
@@ -307,6 +316,11 @@ namespace ServicioTecnico
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            Buscando();
+        }
+
+        private void Buscando()
+        {
             if (ddlBuscarPor.SelectedIndex != 0)
             {
                 btnLimpiarBuscar.Enabled = true;
@@ -319,6 +333,9 @@ namespace ServicioTecnico
                     {
                         case "Cliente":
                             CargarDatosPorBuscador(cliNombre: valor, cliApellido: valor);
+                            break;
+                        case "Todo":
+                            CargarDatosPorBuscador(marca: valor, modelo: valor, serie: valor, tecnico: valor, estado: valor, cliNombre: valor, cliApellido: valor);
                             break;
                         case "EQU_MARCA":
                             CargarDatosPorBuscador(marca: valor);
@@ -367,6 +384,11 @@ namespace ServicioTecnico
         protected void btnLimpiarBuscar_Click(object sender, EventArgs e)
         {
             LimpiarBuscarPor();
+        }
+
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            Buscando();
         }
     }
 }

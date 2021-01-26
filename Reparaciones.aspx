@@ -42,6 +42,7 @@
                                             <asp:DropDownList ID="ddlBuscarPor" CssClass="form-control" runat="server">
                                                 <asp:ListItem Text="Seleccione..." Value="0"></asp:ListItem>
                                                 <asp:ListItem Text="Cliente" Value="Cliente"></asp:ListItem>
+                                                <asp:ListItem Text="Todo" Value="Todo"></asp:ListItem>
                                                 <asp:ListItem Text="Marca Equipo" Value="EQU_MARCA"></asp:ListItem>
                                                 <asp:ListItem Text="Modelo Equipo" Value="EQU_MODELO"></asp:ListItem>
                                                 <asp:ListItem Text="Serie Equipo" Value="EQU_SERIE"></asp:ListItem>
@@ -53,7 +54,7 @@
                                     <div class="col-md-6 col-lg-8 col-sm-12 col-12">
 
                                         <div class="input-group mb-3">
-                                            <asp:TextBox ID="txtBuscar" CssClass="form-control" placeholder="Buscar por..." aria-describedby="btnBuscar" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtBuscar" AutoPostBack="true" OnTextChanged="txtBuscar_TextChanged" CssClass="form-control" placeholder="Buscar por..." aria-describedby="btnBuscar" runat="server"></asp:TextBox>
                                             <asp:LinkButton ID="btnBuscar" OnClick="btnBuscar_Click" CssClass="btn btn-outline-secondary" runat="server"><i class="fa fa-search"></i></asp:LinkButton>
                                             <asp:LinkButton ID="btnLimpiarBuscar" ToolTip="Limpiar" CssClass="btn btn-dark text-light" OnClick="btnLimpiarBuscar_Click" runat="server"><i class="fa fa-refresh"></i></asp:LinkButton>
                                         </div>
@@ -282,6 +283,9 @@
                 </div>
             </div>
         </ContentTemplate>
+        <%--<Triggers>
+            <asp:PostBackTrigger ControlID="txtBuscar" />
+        </Triggers>--%>
     </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="cph_scripts" runat="server">
